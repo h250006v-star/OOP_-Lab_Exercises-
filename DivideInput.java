@@ -2,22 +2,27 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DivideInput {
-    public static void main(String[]args){
-        Scanner sc = new Scanner(System.in);
-
-        try {
-            System.out.print("Enter the first number: ");
-            int num1 = sc.nextInt();
-            System.out.print("Enter the second number: ");
-            int num2 = sc.nextInt();
-            System.out.println(num1 + " / " + num2 + " = " + (num1 / num2));
-
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter valid integers.");
-        } catch (ArithmeticException e) {
-            System.out.println("Cannot divide by zero.");
+    static int readInt(Scanner sc, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Error: please enter whole numbers only.");
+                sc.nextLine();          // throw away the bad text, then ask again
+            }
         }
-        finally {
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = readInt(sc, "Enter first integer: ");
+        int b = readInt(sc, "Enter second integer: ");
+        try {
+            System.out.println(a + " / " + b + " = " + (a / b));
+        } catch (ArithmeticException e) {
+            System.out.println("Error: cannot divide by zero.");
+        } finally {
             sc.close();
         }
     }
